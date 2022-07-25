@@ -18,7 +18,7 @@ pip install .
 
 from within the folder. Installation directly via ```pip``` without downloading the code is not available yet.
 
-You can have an initial look at how to use this package in the ```tutorial.py``` file, which provides a brief overview of the main functionalities of this package.
+You can have an initial look at how to use this package in the [```tutorial.py```](https://github.com/datasciencecampus/jtstats-py/blob/main/tutorial.py) file, which provides a brief overview of the main functionalities of this package.
 More information is avaiable in the associated [paper] and in a [blog post] on the [Office for National Statistics Data Science Campus](https://datasciencecampus.ons.gov.uk).
 
 ## 🛡 License

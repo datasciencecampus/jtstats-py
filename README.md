@@ -28,7 +28,7 @@ You can get some example JTS data as follows:
 
 ````
 jts_data_0101 = jts.get_jts(table_code = 'jts0101', sheet = 'JTS0101')
-jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, base_url = 'https://github.com/ITSLeeds/jts/releases/download/2/', table_code = None)
+jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, table_code = None)
 ````
 
 You can also retrieve data from the Index of Multiple Deprivation (IMD) with this package:

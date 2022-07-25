@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "jtspy"
+version = "0.1.0"
+description = "A package to retrieve and clean the journey time statistics data published by the UK Department for Transport"
+authors = ["Federico Botta <f.botta@exeter.ac.uk>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.3"
+numpy = "^1.23.0"
+geopandas = "^0.11.0"
+matplotlib = "^3.5.2"
+descartes = "^1.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

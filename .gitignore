@@ -20,3 +20,4 @@ models/*.vec
 data/*
 .mypy*
 output/*
+.Rproj.user

@@ -4,13 +4,28 @@ This Python package allows to easily access Journey Time Statistics (JTS) data r
 
 More information on this project can be found in the parent repository [JTS](https://github.com/datasciencecampus/jtstats).
 
-To install this package, download this repository and run:
+To install this package, download this repository and run the following from the root directory of the repo:
 
-```
+```bash
+# # If you have not previously installed poetry before...
+# type the following if you're on Windows (uncomment this first):
+# (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+# See https://python-poetry.org/docs/ for details on installation on other platforms
 poetry install
 ```
 
-or:
+To open a Python session with all the dependencies you can run the following:
+
+```bash
+poetry shell
+python
+# From the Python shell, load the package to test it's installed:
+import jtspy as jts
+```
+
+The you should be able to run the commands in [tutorial.py](tutorial.py).
+
+To install the package with pip try the following:
 
 ```
 pip install .   

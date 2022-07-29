@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
 import pkg_resources
+import jtspy.geo as jtsgeo
+import geopandas as gpd
 
-def get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, base_url = 'https://github.com/ITSLeeds/jts/releases/download/2/', table_code = None):
+def get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, base_url = 'https://github.com/ITSLeeds/jts/releases/download/2/', table_code = None, geo = False):
     '''
     
 
@@ -22,10 +24,13 @@ def get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, base_url = '
         Exact JTS table code if already known. The default is None.
     base_url : string
         URL of where the data is. The default is 'https://github.com/datasciencecampus/jtstats/releases/tag/0'.
+    geo: boolean
+        Whether geographic boundaries are required or not. The default is False.
 
     Returns
     -------
-    None.
+    Pandas data frame containing the requested JTS data. If geo is True, the
+    returned variable is a Geopandas data frame.
 
     '''
     
@@ -125,7 +130,17 @@ def get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, base_url = '
             raise Warning('Not implemented yet')
             cleaned_df = pd.DataFrame()
         
-        
+        if geo:
+            
+            if any('LSOA' in x for x in cleaned_df.columns.values):
+                
+                geo_gdf = jtsgeo.get_lsoa_boundaries()
+                return gpd.GeoDataFrame(geo_gdf.merge(cleaned_df, left_on = 'LSOA11CD', right_on = 'LSOA_code', how = 'inner'))
+            elif any('LA_Code' in x for x in cleaned_df.columns.values):
+                
+                geo_gdf = jtsgeo.get_la_boundaries()
+                return gpd.GeoDataFrame(geo_gdf.merge(cleaned_df, left_on = 'lad11cd', right_on = 'LA_Code', how = 'inner'))
+            
         return cleaned_df
 
     except KeyError:

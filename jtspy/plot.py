@@ -116,7 +116,7 @@ def create_scatter_plot(df, key1, key2, title = None, figsize = (10,10), export_
         plt.savefig(export_path, format = fmt, dpi = dpi)
 
 
-def choropleth_map(gdf, gdfkey, df, dfkey, dfval, outpath=None, fmt="pdf",
+def choropleth_map(gdf, gdfval, outpath=None, fmt="pdf",
                     figsize=(8,8), title=None, valrange=[], logscale=False,
                     colormap="RdBu", cblabel=None, cbticks=None, cbticklabels=None,
                     tiles=None, dark_theme=False, linewidth=0.05, dpi=300, alpha = 1):
@@ -126,10 +126,7 @@ def choropleth_map(gdf, gdfkey, df, dfkey, dfval, outpath=None, fmt="pdf",
     Parameters
     ----------
     gdf : GeoPandas DataFrame (Shapefile).
-    gdfkey : Key on gdf to match with df.
-    df : Pandas DataFrame object.
-    dfkey : Key on df to match with gdf.
-    dfval : Field on df with values to plot.
+    gdfval : Field on df with values to plot.
     outpath : Output path. If None returns figure object.
     fmt : format of the plot.
     figsize : Figure size (x,y).
@@ -172,11 +169,9 @@ def choropleth_map(gdf, gdfkey, df, dfkey, dfval, outpath=None, fmt="pdf",
             "savefig.facecolor": "black",
             "savefig.edgecolor": "black"})
 
-    merged = pd.merge(gdf, df, left_on=gdfkey, right_on=dfkey, how="inner")
-
     if tiles != None:
         # Convert to Web Mercator coordinates
-        merged = merged.to_crs(epsg=3857)
+        gdf = gdf.to_crs(epsg=3857)
 
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(111)
@@ -187,22 +182,22 @@ def choropleth_map(gdf, gdfkey, df, dfkey, dfval, outpath=None, fmt="pdf",
     plt.axis('off')
     
     # Bounding the map
-    minx, miny, maxx, maxy = merged["geometry"].unary_union.bounds
+    minx, miny, maxx, maxy = gdf["geometry"].unary_union.bounds
     w, h = maxx - minx, maxy - miny
     ax.set_xlim(minx - 0 * w, maxx + 0 * w)
     ax.set_ylim(miny - 0 * h, maxy + 0 * h)
     ax.set_aspect(1)
     
     if len(valrange) != 2:
-        valrange = [merged[dfval].min(), merged[dfval].max()]
+        valrange = [gdf[gdfval].min(), gdf[gdfval].max()]
     
     # Plotting patches
     cmap = plt.get_cmap(colormap)
     patches = []
 
-    for i,row in merged.iterrows():
+    for i,row in gdf.iterrows():
         
-        val = row[dfval]
+        val = row[gdfval]
         geom = row["geometry"]
                
         if(math.isnan(val)):
@@ -259,7 +254,7 @@ def choropleth_map(gdf, gdfkey, df, dfkey, dfval, outpath=None, fmt="pdf",
     if cblabel != None:
         cb1.set_label(cblabel)
     else:
-        cb1.set_label(dfval)
+        cb1.set_label(gdfval)
         
     if cbticks != None:
         cb1.set_ticks(cbticks)

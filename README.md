@@ -8,9 +8,11 @@ To install this package, download this repository and run the following from the
 
 ```bash
 # # If you have not previously installed poetry before...
-# type the following if you're on Windows (uncomment this first):
+# type the following for osx/linux/bashonwindows:
+# curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+# or type the following if you're on Windows:
 # (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
-# See https://python-poetry.org/docs/ for details on installation on other platforms
+# See https://python-poetry.org/docs/ for details on installation
 poetry install
 ```
 
@@ -31,7 +33,7 @@ To install the package with pip try the following:
 pip install .   
 ```
 
-from within the folder. Installation directly via ```pip``` without downloading the code is not available yet.
+from within the folder. Installation directly via ```PyPI``` without downloading the code is not available yet.
 
 To use the package, import it in your script:
 
@@ -44,6 +46,13 @@ You can get some example JTS data as follows:
 ````
 jts_data_0101 = jts.get_jts(table_code = 'jts0101', sheet = 'JTS0101')
 jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, table_code = None)
+````
+
+You can also plot JTS data at the Local Authority or at the Lower Super Output Area level (for the JTS table for which this is available) by setting the ```geo``` flag to ```True```:
+
+````
+jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, geo = True)
+jts.choropleth_map(jts_df, '5000EmpPTt')
 ````
 
 You can also retrieve data from the Index of Multiple Deprivation (IMD) with this package:

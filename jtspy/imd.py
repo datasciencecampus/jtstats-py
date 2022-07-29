@@ -1,4 +1,6 @@
 import pandas as pd
+import jtspy.geo as jtsgeo
+import geopandas as gpd
 
 
 def _imd_dictionary():
@@ -85,7 +87,7 @@ def _imd_url(year, rank = True, domain = False):
     return url
 
 
-def get_imd(domain, year, rank = True, level = 'lsoa'):
+def get_imd(domain, year, rank = True, level = 'lsoa', geo = False):
     '''
     
 
@@ -93,13 +95,16 @@ def get_imd(domain, year, rank = True, level = 'lsoa'):
     ----------
     domain : string
         The short label of the domain of the IMD required. See dictionary in method _imd_dictionary
-        for a description of the possible values.
+        for a description of the possible values. Note that you do not need to
+        add the suffixes rank or score to the domain label.
     year : integer
         The year of IMD data required.
     rank : boolean, optional
         Whether rank or scores of IMD are required. The default is True.
     level : string, optional
         Spatial level at which IMD data is required. The default is 'lsoa'.
+    geo: boolean
+        Whether geographic boundaries are required or not. The default is False.
 
     Returns
     -------
@@ -151,11 +156,20 @@ def get_imd(domain, year, rank = True, level = 'lsoa'):
         else:
             
             imd_df = imd_data[['LSOA code (2011)', imd_dict[domain +'_rank']]]
+        
+        if geo:
             
+            geo_gdf = jtsgeo.get_lsoa_boundaries()
+            return gpd.GeoDataFrame(geo_gdf.merge(imd_df, left_on = 'LSOA11CD', right_on = 'LSOA code (2011)', how = 'inner'))
         
     elif level == 'lsoa' and not rank:
         
         imd_df = imd_data[['LSOA code (2011)', imd_dict[domain + '_score']]]
+        
+        if geo:
+            
+            geo_gdf = jtsgeo.get_lsoa_boundaries()
+            return gpd.GeoDataFrame(geo_gdf.merge(imd_df, left_on = 'LSOA11CD', right_on = 'LSOA code (2011)', how = 'inner'))
     
     return imd_df
         

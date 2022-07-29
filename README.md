@@ -48,11 +48,20 @@ jts_data_0101 = jts.get_jts(table_code = 'jts0101', sheet = 'JTS0101')
 jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, table_code = None)
 ````
 
-You can also plot JTS data at the Local Authority or at the Lower Super Output Area level (for the JTS table for which this is available) by setting the ```geo``` flag to ```True```:
+You can also plot JTS data at the Local Authority (LA) or at the Lower Super Output Area level (LSOA) for the JTS table for which this is available
+by setting the ```geo``` flag to ```True``` and using a function from the package:
 
 ````
 jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, geo = True)
 jts.choropleth_map(jts_df, '5000EmpPTt')
+````
+
+The map can be saved by specifying an outpath in the call of the function; the file format can also be specified.
+````
+output_path = ''
+output_format = 'pdf'
+jts.choropleth_map(jts_df, '5000EmpPTt',
+                   title = 'Travel time to employment centres', outpath = output_path, fmt = output_format)
 ````
 
 You can also retrieve data from the Index of Multiple Deprivation (IMD) with this package:
@@ -65,23 +74,10 @@ Or you can get a joint data frame with JTS and IMD data at the lower super outpu
 df = jts.jts_imd_lsoa('jts05', 'primary', 'PSWalkt', 'education')
 ````
 
-The package also allows to retrieve LSOA boundaries so that the data can be plotted on a map (note: this takes a little while as the LSOA boundary file is large):
+The package also allows to retrieve LSOA (and LA) boundaries separately from the data:
 ````
 lsoa_gdf = jts.get_lsoa_boundaries()
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', jts_df, 'LSOA_code', '100EmpPTt' , title = 'JTS travel time to employment centres by public transport', logscale = True)
-
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', imd_df, 'LSOA code (2011)', 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
-                   title = 'Health deprivation and disability rank (where 1 is most deprived)')
 ````
-
-The maps can be saved by specifying an outpath in the call of the function; the file format can also be specified.
-````
-output_path = ''
-output_format = 'pdf'
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', imd_df, 'LSOA code (2011)', 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
-                   title = 'Health deprivation and disability rank (where 1 is most deprived)', outpath = output_path, fmt = output_format)
-````
-
 
 Get a different JTS data set and plot it by mode of transport over the years (NOTE: we have to drop some rows because the mode "Walking" by itself is only available for 2019 so it cannot be compared over time).
 ````

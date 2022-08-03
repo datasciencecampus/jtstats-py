@@ -21,7 +21,7 @@ def get_lsoa_boundaries():
     
     lsoa_gdf = gpd.read_file('https://opendata.arcgis.com/datasets/1f23484eafea45f98485ef816e4fee2d_0.geojson')
     #lsoa_gdf.to_crs('EPSG:27700', inplace = True)
-    lsoa_gdf.to_crs(' EPSG:4326', inplace = True)
+    lsoa_gdf.to_crs(' EPSG:3857', inplace = True)
     
     return lsoa_gdf
 
@@ -45,6 +45,6 @@ def get_la_boundaries():
     
     la_gdf = gpd.read_file('https://opendata.arcgis.com/datasets/0c09b7cde8b44c4ab6e2a1e47a91e400_0.geojson')
     #lsoa_gdf.to_crs('EPSG:27700', inplace = True)
-    la_gdf.to_crs(' EPSG:4326', inplace = True)
+    la_gdf.to_crs(' EPSG:3857', inplace = True)
     
     return la_gdf

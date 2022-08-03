@@ -13,20 +13,22 @@ imd_df = jts.get_imd(domain = 'health', year  = 2019, rank = True, level = 'lsoa
 ### get a merged data frame with JTS and IMD data
 df = jts.jts_imd_lsoa('jts05', 'primary', 'PSWalkt', 'education')
 
-### get the LSOA boundaries and plot a map of JTS data (log scale for ease of interpretation)
+### get the JTS data with geographical data and plot a map (log scale for ease of interpretation)
 ### NOTE: this section can take a little while to run as it downloads a large
 ### file and then plots it
-lsoa_gdf = jts.get_lsoa_boundaries()
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', jts_df, 'LSOA_code', '100EmpPTt' , title = 'JTS travel time to employment centres by public transport', logscale = True)
+jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, geo = True)
+jts.choropleth_map(jts_df, '100EmpPTt' , title = 'JTS travel time to employment centres by public transport', logscale = True)
 
-### a map of the IMD data can also be plotted
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', imd_df, 'LSOA code (2011)', 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
+### a map of the IMD data can also be plotted by retrieving the gegraphical data
+### alongside the IMD data
+imd_df = jts.get_imd(domain = 'health', year  = 2019, rank = True, level = 'lsoa', geo = True)
+jts.choropleth_map(imd_df, 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
                    title = 'Health deprivation and disability rank (where 1 is most deprived)')
 
 ### the maps can be saved by specifying an outpath in the call of the function; file format can also be specified
 output_path = ''
 output_format = 'pdf'
-jts.choropleth_map(lsoa_gdf, 'LSOA11CD', imd_df, 'LSOA code (2011)', 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
+jts.choropleth_map(imd_df, 'Health Deprivation and Disability Rank (where 1 is most deprived)' ,
                    title = 'Health deprivation and disability rank (where 1 is most deprived)', outpath = output_path, fmt = output_format)
 
 

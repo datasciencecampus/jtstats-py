@@ -6,7 +6,6 @@ import matplotlib as mpl
 import math
 import numpy as np
 from descartes import PolygonPatch
-
 import contextily as ctx
 
 

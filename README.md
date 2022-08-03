@@ -55,7 +55,7 @@ by setting the ```geo``` flag to ```True``` and using a function from the packag
 jts_df = jts.get_jts(type_code = 'jts05', spec = 'employment', sheet = 2019, geo = True)
 jts.choropleth_map(jts_df, '500EmpPTt', title = 'JTS travel time to employment centres by public transport', logscale = True)
 
-<img src = '/Figures/map.png'/>
+<img src = "Figures/map.png"/>
 ````
 
 The map can be saved by specifying an outpath in the call of the function; the file format can also be specified.

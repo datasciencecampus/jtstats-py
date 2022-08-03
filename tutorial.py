@@ -43,5 +43,5 @@ jts_df.drop(drop_idx, axis = 0, inplace = True)
 
 jts_pivoted = pd.pivot_table(jts_df, values='Food store', columns='Mode', index='Year')
 fig = jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylabel = 'Minutes').get_figure()
-fig.savefig('/Users/fb394/Documents/GitHub/jts/figures/food_by_mode.pdf')
+fig.savefig('/Users/fb394/Documents/GitHub/jtstats-py/Figures/food_by_mode.pdf')
 

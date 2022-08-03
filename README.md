@@ -62,7 +62,7 @@ The map can be saved by specifying an outpath in the call of the function; the f
 ````
 output_path = ''
 output_format = 'pdf'
-jts.choropleth_map(jts_df, '5000EmpPTt',
+jts.choropleth_map(jts_df, '500EmpPTt',
                    title = 'Travel time to employment centres', outpath = output_path, fmt = output_format)
 ````
 
@@ -88,9 +88,10 @@ drop_idx = jts_df.index[jts_df['Mode'] == 'Walking3']
 jts_df.drop(drop_idx, axis = 0, inplace = True)
 
 jts_pivoted = pd.pivot_table(jts_df, values='Food store', columns='Mode', index='Year')
-fig = jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylabel = 'Minutes').get_figure()
-fig.savefig('/Users/fb394/Documents/GitHub/jts/figures/food_by_mode.pdf')
+jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylabel = 'Minutes')
 ````
+
+<img src = "Figures/food_by_mode.png" />
 
 You can also find the above code on how to use this package in the [```tutorial.py```](https://github.com/datasciencecampus/jtstats-py/blob/main/tutorial.py) file, which provides a brief overview of the main functionalities of this package.
 More information is avaliable in the associated [paper] and in a [blog post] on the [Office for National Statistics Data Science Campus](https://datasciencecampus.ons.gov.uk).

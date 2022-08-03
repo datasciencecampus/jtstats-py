@@ -96,19 +96,12 @@ jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylab
 You can also find the above code on how to use this package in the [```tutorial.py```](https://github.com/datasciencecampus/jtstats-py/blob/main/tutorial.py) file, which provides a brief overview of the main functionalities of this package.
 More information is avaliable in the associated [paper] and in a [blog post] on the [Office for National Statistics Data Science Campus](https://datasciencecampus.ons.gov.uk).
 
+## Development
+
+The package includes a series of tests written using ````pytest```` which can be used when developing the package further to test that the basic functionalities are not affected.
+The tests check that, for each JTS table, the package returns the correct number of columns with the correct names, and it also checks a predefined set of values to ensure the tables are parsed correctly.
+Note that changes to the way the tables are parsed or changes in the shape of the resulting data frame will break the tests.
 ## 🛡 License
 
-This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/n10ds/jts/blob/main/LICENSE) for more details.
+This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/datasciencecampus/jtstats-py/blob/main/LICENSE) for more details.
 
-## 📃 Citation
-
-```bibtex
-@misc{jts,
-  author = {10DS},
-  title = {R and Python packages to import JTS data},
-  year = {2022},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/10ds/jts}}
-}
-```

@@ -117,7 +117,7 @@ def create_scatter_plot(df, key1, key2, title = None, figsize = (10,10), export_
 
 def choropleth_map(gdf, gdfval, outpath=None, fmt="pdf",
                     figsize=(8,8), title=None, valrange=[], logscale=False,
-                    colormap="RdBu", cblabel=None, cbticks=None, cbticklabels=None,
+                    colormap="viridis", cblabel=None, cbticks=None, cbticklabels=None,
                     tiles=None, dark_theme=False, linewidth=0.05, dpi=300, alpha = 1):
     """
     Plots a choropleth map given by GeoPandas object and values from a DataFrame.

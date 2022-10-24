@@ -88,7 +88,8 @@ drop_idx = jts_df.index[jts_df['Mode'] == 'Walking3']
 jts_df.drop(drop_idx, axis = 0, inplace = True)
 
 jts_pivoted = pd.pivot_table(jts_df, values='Food store', columns='Mode', index='Year')
-jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylabel = 'Minutes')
+styles = ['-.','--','-']
+jts_pivoted.plot(title = 'Travel time to food stores by mode of transport', ylabel = 'Minutes', style = styles)
 ````
 
 <img src = "Figures/food_by_mode.png" />

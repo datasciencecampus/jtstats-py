@@ -9,10 +9,8 @@ To install this package, download this repository and run the following from the
 ```bash
 # # If you have not previously installed poetry before...
 # type the following for osx/linux/bashonwindows:
-# curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-# or type the following if you're on Windows:
-# (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
-# See https://python-poetry.org/docs/ for details on installation
+curl -sSL https://install.python-poetry.org | python3 -
+# See https://python-poetry.org/docs/#installing-with-the-official-installer
 poetry install
 ```
 

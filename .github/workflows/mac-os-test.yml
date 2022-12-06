@@ -5,37 +5,37 @@ on: [push]
 jobs:
   test:
   runs-on: ubuntu-latest
-steps:
-  #----------------------------------------------
-#       check-out repo and set-up python
-#----------------------------------------------
-- name: Check out repository
-  uses: actions/checkout@v3
-- name: Set up python
-  id: setup-python
-  uses: actions/setup-python@v4
-  with:
-    python-version: '3.x'
-#----------------------------------------------
-#  -----  install & configure poetry  -----
-#----------------------------------------------
-- name: Install Poetry
-  uses: snok/install-poetry@v1
+  steps:
+      #----------------------------------------------
+    #       check-out repo and set-up python
+    #----------------------------------------------
+    - name: Check out repository
+      uses: actions/checkout@v3
+    - name: Set up python
+      id: setup-python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    #----------------------------------------------
+    #  -----  install & configure poetry  -----
+    #----------------------------------------------
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
 
 
-#----------------------------------------------
-# install dependencies
-#----------------------------------------------
-- name: Install dependencies
-  if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-  run: poetry install --no-interaction --no-root
-#----------------------------------------------
-# install your root project, if required
-#----------------------------------------------
-- name: Install project
-  run: poetry install --no-interaction
-#----------------------------------------------
-#              run test suite
-#----------------------------------------------
-- name: Run tests
-  run: poetry run pytest tests/
+    #----------------------------------------------
+    # install dependencies
+    #----------------------------------------------
+    - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: poetry install --no-interaction --no-root
+    #----------------------------------------------
+    # install your root project, if required
+    #----------------------------------------------
+    - name: Install project
+      run: poetry install --no-interaction
+    #----------------------------------------------
+    #              run test suite
+    #----------------------------------------------
+    - name: Run tests
+      run: poetry run pytest tests/

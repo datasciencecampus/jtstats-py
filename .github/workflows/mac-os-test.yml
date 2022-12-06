@@ -5,6 +5,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
         #----------------------------------------------
       #       check-out repo and set-up python
@@ -22,9 +23,17 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
-
       #----------------------------------------------
-      # install dependencies
+      #       load cached venv if cache exists
+      #----------------------------------------------
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      #----------------------------------------------
+      # install dependencies if cache does not exist
       #----------------------------------------------
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
@@ -38,4 +47,6 @@ jobs:
       #              run test suite
       #----------------------------------------------
       - name: Run tests
-        run: poetry run pytest tests/
+        run: |
+          poetry shell
+          poetry run pytest

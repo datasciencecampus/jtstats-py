@@ -46,7 +46,7 @@ jobs:
       #----------------------------------------------
       #              run test suite
       #----------------------------------------------
-      #- name: Run tests
-      #  run: |
+      - name: Run tests
+        run: poetry run pytest
       #   source .venv/bin/activate
       #    poetry run pytest

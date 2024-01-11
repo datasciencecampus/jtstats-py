@@ -354,7 +354,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
         clean_df.drop(drop_idx, axis = 0, inplace = True)
         clean_df.columns = ['LA Code', 'Local Authority', 'Nearest airport by travel time (by public transport', 'Average travel time (minutes, by public transport)',
                             'Nearest airport by travel time (by car)', 'Average travel time (minutes, by car)']
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
         
     if sheet == 'JTS0901_Selected':
         
@@ -369,7 +369,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
                             'Manchester T1 by car','Manchester T2 by car', 'Manchester T3 by car', 'Stansted by car', 'Luton by car', 'Edinburgh by car', 'Birmingham by car',
                             'Glasgow by car', 'Bristol by car', 'Liverpool John Lennon by car', 'Newcastle by car', 'East Midlands by car',
                             'Aberdeen by car', 'London City by car', 'Leeds by car']
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
     
     if sheet == 'JTS0902':
         
@@ -408,7 +408,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
                             'Manchester T1 by car', 'Manchester T2 by car', 'Manchester T3 by car', 'Stansted by car', 'Luton by car',
                             'Birmingham by car', 'Bristol by car','Liverpool John Lennon by car', 'Newcastle by car', 'East Midlands by car',
                             'London City by car', 'Leeds by car']
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
         
     if sheet == 'JTS0905_Summary':
         
@@ -417,7 +417,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
         clean_df.columns = ['LSOA Code', 'LSOA Name', 'Upper tier local authority code', 'Upper tier local authority name', 'LSOA population (2015)',
                             'Nearest airport by public transport/walking travel time', 'Average minimum journey time by public transport/walking','Nearest airport by car time',
                             'Average minimum journey by car']
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
     
     if sheet == 'JTS0921_Nearest':
         
@@ -430,7 +430,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
         
         drop_idx = [x for x in clean_df.index if (len(str(clean_df['LA Code'][x]).replace(' ','')) > 9 or not all(map(str.isalnum, str(clean_df['LA Code'][x]).replace(' ',''))) or 'E1200' in str(clean_df['LA Code'][x]))]
         clean_df.drop(drop_idx, axis = 0, inplace = True)
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
     
     if sheet == 'JTS0922':
         
@@ -441,7 +441,7 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
                             '%People within 20km and 30 mins of the station by public transport', '%People within 20km and 60 mins of the station by public transport', '%People within 20km and 120 mins of the station by public transport',
                             '%People within 20km and 30 mins of the station by car', '%People within 20km and 60 mins of the station by car', '%People within 20km and 120 mins of the station by car',
                             'Population within 20km']
-        clean_df.replace(to_replace = '..', value = 240, inplace = True)
+        clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
         
     if sheet == 'JTS0923':
         
@@ -459,20 +459,21 @@ def clean_jts(df, starting_string, col_idx = False, sheet = 2019, flag_2 = False
     
     # if sheet == 'JTS0925_Selected' or sheet == 'JTS0925_Summary' or sheet == 'JTS0926_Summary' or sheet == 'JTS0926_Selected':
         
-    #     clean_df.replace(to_replace = '..', value = 240, inplace = True)
+    #     clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
         
     if sheet == 'JTS0930_LA' or sheet == 'JTS0930_LSOA':
         
-        clean_df.replace(to_replace = '--', value = -999, inplace = True)
+        clean_df.replace(to_replace = '--', value = np.NaN, inplace = True)
         
     clean_df.drop_duplicates(inplace = True)
         
-    clean_df.replace(to_replace = '..', value = 240, inplace = True)
+    clean_df.replace(to_replace = '..', value = np.NaN, inplace = True)
     #clean_df = clean_df[~clean_df.isin(['..']).any(axis = 1)]
     
-    rows_with_string =  [idx for idx, x in clean_df[clean_df.columns[len(clean_df.columns)-1]].iteritems() if any(str(c).isalpha() for c in str(x))]
-    
-    clean_df.drop(axis = 0, index = rows_with_string, inplace = True)
+    if not (sheet == 'JTS0901_Nearest' or sheet == 'JTS0901_Selected' or sheet == 'JTS0905_Selected' or sheet == 'JTS0905_Summary' or sheet == 'car' or sheet == 'PT' or sheet == 'JTS0922' or sheet == 'JTS0930_LA' or sheet == 'JTS0930_LSOA'):
+        rows_with_string =  [idx for idx, x in clean_df[clean_df.columns[len(clean_df.columns)-1]].iteritems() if any(str(c).isalpha() for c in str(x))]
+        
+        clean_df.drop(axis = 0, index = rows_with_string, inplace = True)
     
     
     for i in clean_df.columns:
